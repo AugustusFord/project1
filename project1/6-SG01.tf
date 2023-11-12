@@ -11,7 +11,7 @@ resource "aws_security_group" "app1_sg01_servers" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   ingress {
+  ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
@@ -19,7 +19,7 @@ resource "aws_security_group" "app1_sg01_servers" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   ingress {
+  ingress {
     description = "RDP"
     from_port   = 3389
     to_port     = 3389
@@ -27,7 +27,15 @@ resource "aws_security_group" "app1_sg01_servers" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow inbound HTTPS traffic"
+  }
+
+
 
   egress {
     from_port   = 0
