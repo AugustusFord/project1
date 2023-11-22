@@ -28,6 +28,28 @@ resource "aws_wafv2_web_acl" "app1_waf_acl" {
     }
   }
 
+  rule {
+    name     = "AWSManagedRulesKnownBadInputs"
+    priority = 2
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesKnownBadInputsRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = false
+      metric_name                = "AWSManagedRulesKnownBadInputs"
+      sampled_requests_enabled   = false
+    }
+  }
+
   visibility_config {
     cloudwatch_metrics_enabled = false
     metric_name                = "app1WebACL"
@@ -49,8 +71,10 @@ resource "aws_wafv2_ip_set" "ip_block_list" {
   ip_address_version = "IPV4"
 
   addresses = [
-    "192.0.2.0/24",
-    "203.0.113.0/24"
+    "1.188.0.0/16",
+    "1.88.0.0/16",
+    "101.144.0.0/16",
+    "101.16.0.0/16"
   ]
 
   tags = {
